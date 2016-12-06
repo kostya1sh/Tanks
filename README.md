@@ -3,6 +3,6 @@ Simple game for Android. Controls: tap on center of screen to shot, on top of sc
 
 Known issues:
 
-1. Object cast shadows to themselfs. It can be fixed by glEnable(GL_CULL_FACE). 
+1. Objects cast shadows to themselfs. It can be fixed by glEnable(GL_CULL_FACE). 
 
 2. BufferOverflowException when moving. 
