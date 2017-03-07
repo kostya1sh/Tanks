@@ -70,33 +70,33 @@ public class TankBarrel extends RenderableObject {
         }
     }
 
-    public void changeCoords(float xOffset, float yOffset) {
+    public synchronized void changeCoords(float xOffset, float yOffset) {
         setX(getX() + xOffset);
         setY(getY() + yOffset);
     }
 
-    public void moveUp(float offset, float x, float y) {
+    public synchronized void moveUp(float offset, float x, float y) {
         for (CubeObject cubeObject: cubes) {
             cubeObject.moveUp(offset, x, y);
         }
         setY(getY() + offset);
     }
 
-    public void moveDown(float offset, float x, float y) {
+    public synchronized void moveDown(float offset, float x, float y) {
         for (CubeObject cubeObject: cubes) {
             cubeObject.moveDown(offset, x, y);
         }
         setY(getY() - offset);
     }
 
-    public void moveLeft(float offset, float x, float y) {
+    public synchronized void moveLeft(float offset, float x, float y) {
         for (CubeObject cubeObject: cubes) {
             cubeObject.moveLeft(offset, x, y);
         }
         setX(getX() - offset);
     }
 
-    public void moveRight(float offset, float x, float y) {
+    public synchronized void moveRight(float offset, float x, float y) {
         for (CubeObject cubeObject: cubes) {
             cubeObject.moveRight(offset, x, y);
         }

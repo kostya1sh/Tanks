@@ -1,3 +1,4 @@
+#version 100
 //precision highp float;
 precision highp float;
 
@@ -57,7 +58,7 @@ void main()
 	lightVec = normalize(lightVec);
    	
    	// Phong shading with diffuse and ambient component
-	float diffuseComponent = max(0.0, dot(lightVec, vNormal) );
+	float diffuseComponent = max(0.0, dot(lightVec, vNormal));
 	float ambientComponent = 0.3;
  		
  	// Shadow
@@ -65,7 +66,6 @@ void main()
 
 	//if the fragment is not behind light view frustum
 	if (vShadowCoord.w > 0.0) {
-				
 		shadow = shadowSimple();
 			
 		//scale 0.0-1.0 to 0.2-1.0

@@ -7,9 +7,9 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import lab.mg.tanks3d.containers.ObjectKeeper;
-import lab.mg.tanks3d.utils.GLMatrixUtils;
 import lab.mg.tanks3d.containers.Shader;
 import lab.mg.tanks3d.containers.ShaderKeeper;
+import lab.mg.tanks3d.utils.GLMatrixUtils;
 
 import static android.opengl.GLES20.GL_FLOAT;
 import static android.opengl.GLES20.GL_TEXTURE0;
@@ -34,7 +34,7 @@ import static android.opengl.GLES20.glVertexAttribPointer;
 
 public class CubeObject extends RenderableObject {
     public static final float DEFAULT_SIZE = 1.0f;
-    private FloatBuffer vertexData;
+    private volatile FloatBuffer vertexData;
     private FloatBuffer depthVertexData;
     private float size;
 
@@ -80,7 +80,7 @@ public class CubeObject extends RenderableObject {
 
     }
 
-    private void prepareData() {
+    private synchronized void prepareData() {
         float[] vertices = {
                 // if camera in x = 0, y = 0, z != 0
                 // front side
@@ -175,7 +175,7 @@ public class CubeObject extends RenderableObject {
         depthVertexData.put(verticesd);
     }
 
-    private void bindData() {
+    private synchronized void bindData() {
         float[] tempResultMatrix = new float[16];
         float[] mMVMatrix = new float[16];
         float[] mNormalMatrix = new float[16];
@@ -298,9 +298,7 @@ public class CubeObject extends RenderableObject {
         glDrawArrays(GL_TRIANGLE_FAN, 16, 4);
         glDrawArrays(GL_TRIANGLE_FAN, 20, 4);
     }
-
-
-
+    
     @Override
     public void renderDepthOnly() {
         glUseProgram(depthShader.getProgramId());
@@ -310,15 +308,10 @@ public class CubeObject extends RenderableObject {
         bindMatrixDepth();
 
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
         glDrawArrays(GL_TRIANGLE_FAN, 4, 4);
-
         glDrawArrays(GL_TRIANGLE_FAN, 8, 4);
-
         glDrawArrays(GL_TRIANGLE_FAN, 12, 4);
-
         glDrawArrays(GL_TRIANGLE_FAN, 16, 4);
-
         glDrawArrays(GL_TRIANGLE_FAN, 20, 4);
     }
 
@@ -346,13 +339,13 @@ public class CubeObject extends RenderableObject {
         yRotateAngle = angle;
     }
 
-    public void changeCoords(float xOffset, float yOffset) {
+    public synchronized void changeCoords(float xOffset, float yOffset) {
         setX(getX() + xOffset);
         setY(getY() + yOffset);
         prepareData();
     }
 
-    public void moveUp(float offset, float x, float y) {
+    public synchronized void moveUp(float offset, float x, float y) {
         Matrix.setIdentityM(mModelMatrix, 0);
         // save move
         setY(getY() + offset);
@@ -366,7 +359,7 @@ public class CubeObject extends RenderableObject {
 
     }
 
-    public void moveDown(float offset, float x, float y) {
+    public synchronized void moveDown(float offset, float x, float y) {
         Matrix.setIdentityM(mModelMatrix, 0);
         // save move
         setY(getY() - offset);
@@ -378,7 +371,7 @@ public class CubeObject extends RenderableObject {
         Matrix.translateM(mModelMatrix, 0, -x, -y, 0.0f);
     }
 
-    public void moveLeft(float offset, float x, float y) {
+    public synchronized void moveLeft(float offset, float x, float y) {
         Matrix.setIdentityM(mModelMatrix, 0);
 
         // save move
@@ -391,7 +384,7 @@ public class CubeObject extends RenderableObject {
         Matrix.translateM(mModelMatrix, 0, -x, -y, 0.0f);
     }
 
-    public void moveRight(float offset, float x, float y) {
+    public synchronized void moveRight(float offset, float x, float y) {
         Matrix.setIdentityM(mModelMatrix, 0);
 
         // save move

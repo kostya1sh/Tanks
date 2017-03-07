@@ -80,7 +80,7 @@ public class Tank extends RenderableObject {
         return false;
     }
 
-    public void moveUp() {
+    public synchronized void moveUp() {
         setY(getY() + speed);
         if (checkTankCollision(this)) {
             setY(getY() - speed);
@@ -93,7 +93,7 @@ public class Tank extends RenderableObject {
         currentDir = IObject.DIR_UP;
     }
 
-    public void moveDown() {
+    public synchronized void moveDown() {
         setY(getY() - speed);
         if (checkTankCollision(this)) {
             setY(getY() + speed);
@@ -106,7 +106,7 @@ public class Tank extends RenderableObject {
         currentDir = IObject.DIR_DOWN;
     }
 
-    public void moveLeft() {
+    public synchronized void moveLeft() {
         setX(getX() - speed);
         if (checkTankCollision(this)) {
             setX(getX() + speed);
@@ -119,7 +119,7 @@ public class Tank extends RenderableObject {
         currentDir = IObject.DIR_LEFT;
     }
 
-    public void moveRight() {
+    public synchronized void moveRight() {
         setX(getX() + speed);
         if (checkTankCollision(this)) {
             setX(getX() - speed);

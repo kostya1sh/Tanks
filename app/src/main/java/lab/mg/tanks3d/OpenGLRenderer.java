@@ -82,7 +82,7 @@ public class OpenGLRenderer implements GLSurfaceView.Renderer {
         }
 
         // create projection and view matrices
-        GLMatrixUtils.getInstance().init(MainActivity.screenWidth, MainActivity.screenHeight, 12.0f, 12.0f, 15.0f);
+        GLMatrixUtils.getInstance().init(MainActivity.screenWidth, MainActivity.screenHeight, 12.0f, -1.0f, 15.0f);
 
         // load textures
         // all textures in first unit; third parameter not needed!

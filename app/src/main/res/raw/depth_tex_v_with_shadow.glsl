@@ -1,3 +1,7 @@
+#version 100
+
+precision mediump float;
+
 uniform mat4 uMVPMatrix;
 uniform mat4 uMVMatrix;
 uniform mat4 uNormalMatrix;
